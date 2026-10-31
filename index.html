@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+  <title>Atari Forever</title>
+  <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+  <style>
+    html, body { margin: 0; height: 100%; overflow: hidden; background: #111; color: #ddd; font-family: system-ui, sans-serif; }
+    body {
+      display: grid;
+      grid-template-columns: minmax(200px, 270px) minmax(0, 1fr) minmax(200px, 270px);
+      grid-template-areas: "left stage right";
+      gap: 24px;
+      padding: 16px;
+      box-sizing: border-box;
+    }
+    h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .08em; opacity: .6; margin: 0 0 10px; font-weight: 600; }
+    section + section { margin-top: 22px; }
+    .brand { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+    .brand img { width: 56px; height: 56px; flex: none; }
+    .brand span { font-size: 18px; font-weight: 700; letter-spacing: .02em; line-height: 1.1; }
+    .brand small { display: block; font-size: 11px; font-weight: 500; opacity: .55; letter-spacing: .08em; text-transform: uppercase; margin-top: 3px; }
+
+    #left { grid-area: left; align-self: center; min-width: 0; }
+    #right { grid-area: right; align-self: center; min-width: 0; }
+    #stage { grid-area: stage; min-width: 0; min-height: 0; }
+    canvas { display: block; width: 100%; height: 100%; object-fit: contain; image-rendering: pixelated; background: #000; touch-action: none; }
+
+    #keys { display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; font-size: 13px; margin: 0; align-items: center; }
+    #keys dt { text-align: right; white-space: nowrap; }
+    #keys dd { margin: 0; opacity: .75; }
+    kbd { background: #333; border: 1px solid #555; border-bottom-width: 2px; border-radius: 4px; padding: 1px 6px; font: 12px ui-monospace, monospace; }
+
+    #mute {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #2a2a2a; color: #ddd; border: 1px solid #555; border-radius: 6px;
+      padding: 6px 12px; font: 13px system-ui, sans-serif; cursor: pointer;
+    }
+    #mute:hover { background: #333; }
+    #mute[aria-pressed="true"] { color: #f88; border-color: #844; }
+    #toggles { font-size: 13px; opacity: .85; margin-top: 10px; }
+
+    #status { font-size: 13px; opacity: .7; margin-top: 10px; overflow-wrap: anywhere; }
+    #rom { max-width: 100%; font-size: 13px; }
+
+    @media (max-width: 900px) {
+      body {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-rows: minmax(0, 1fr) auto auto;
+        grid-template-areas: "stage" "left" "right";
+        gap: 10px;
+      }
+      #left, #right { align-self: start; }
+      #left h2, .brand { display: none; }
+      #keys { grid-template-columns: repeat(4, auto); gap: 4px 8px; font-size: 11px; }
+      #keys dt { text-align: left; }
+      section + section { margin-top: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <aside id="left">
+    <div class="brand"><img src="/logo.svg" alt="" /><span>Atari Forever<small>2600 emulator</small></span></div>
+    <section>
+      <h2>Controls</h2>
+      <dl id="keys">
+        <dt><kbd>←</kbd> <kbd>→</kbd> <kbd>↑</kbd> <kbd>↓</kbd></dt><dd>Joystick</dd>
+        <dt><kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></dt><dd>Joystick (alt)</dd>
+        <dt><kbd>Space</kbd></dt><dd>Fire</dd>
+        <dt><kbd>Enter</kbd></dt><dd>Console Reset</dd>
+        <dt><kbd>Shift</kbd></dt><dd>Console Select</dd>
+        <dt><kbd>F1</kbd></dt><dd>Difficulty A / B</dd>
+        <dt><kbd>F2</kbd></dt><dd>Color / B&amp;W</dd>
+        <dt><kbd>M</kbd></dt><dd>Mute / unmute</dd>
+      </dl>
+    </section>
+    <section>
+      <h2>Settings</h2>
+      <button id="mute" type="button" tabindex="-1" aria-pressed="false"></button>
+      <div id="toggles"></div>
+    </section>
+  </aside>
+
+  <main id="stage">
+    <canvas id="screen" width="160" height="192"></canvas>
+  </main>
+
+  <aside id="right">
+    <section>
+      <h2>ROM</h2>
+      <input id="rom" type="file" accept=".bin,.a26,.rom" />
+      <div id="status">Load a ROM (.bin / .a26)</div>
+    </section>
+  </aside>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
