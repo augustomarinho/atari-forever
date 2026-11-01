@@ -1,0 +1,16 @@
+[package]
+name = "atari-forever"
+version = "0.0.1"
+description = "Atari 2600 emulator"
+authors = ["Atari Forever contributors"]
+edition = "2021"
+
+[lib]
+name = "atari_forever_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
