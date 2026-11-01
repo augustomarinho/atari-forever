@@ -6,7 +6,9 @@ import { AudioOutput } from './platform/audio'
 const canvas = document.getElementById('screen') as HTMLCanvasElement
 const statusEl = document.getElementById('status') as HTMLDivElement
 const input = document.getElementById('rom') as HTMLInputElement
-const ctx = canvas.getContext('2d')!
+const context = canvas.getContext('2d')
+if (!context) throw new Error('2D canvas not supported')
+const ctx: CanvasRenderingContext2D = context
 
 let image = ctx.createImageData(SCREEN_W, SCREEN_H)
 let pixels = new Uint32Array(image.data.buffer)

@@ -214,7 +214,9 @@ const ALU_MODES = [IMM, ZP, ZPX, ABS, ABX, ABY, IZX, IZY]
 const ALU_CYC = [2, 3, 4, 4, 4, 4, 6, 5]
 const ALU_OFF = [0x09, 0x05, 0x15, 0x0d, 0x1d, 0x19, 0x01, 0x11]
 function alu(base: number, exec: Exec) {
-  ALU_OFF.forEach((off, k) => def(base + off, exec, ALU_MODES[k], ALU_CYC[k], k === 4 || k === 5 || k === 7))
+  for (let k = 0; k < ALU_OFF.length; k++) {
+    def(base + ALU_OFF[k], exec, ALU_MODES[k], ALU_CYC[k], k === 4 || k === 5 || k === 7)
+  }
 }
 alu(0x00, (c, a) => { c.a |= c.read(a); c.setNZ(c.a) }) // ORA
 alu(0x20, (c, a) => { c.a &= c.read(a); c.setNZ(c.a) }) // AND

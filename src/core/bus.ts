@@ -27,9 +27,14 @@ export class AtariBus implements Bus {
 
   write(addr: number, value: number): void {
     addr &= 0x1fff
-    if (addr & 0x1000) return this.cart.write(addr & 0xfff, value)
-    if ((addr & 0x80) === 0) return this.tia.write(addr & 0x3f, value)
-    if ((addr & 0x200) === 0) return this.riot.writeRam(addr, value)
-    this.riot.write(addr, value)
+    if (addr & 0x1000) {
+      this.cart.write(addr & 0xfff, value)
+    } else if ((addr & 0x80) === 0) {
+      this.tia.write(addr & 0x3f, value)
+    } else if ((addr & 0x200) === 0) {
+      this.riot.writeRam(addr, value)
+    } else {
+      this.riot.write(addr, value)
+    }
   }
 }
