@@ -1,0 +1,58 @@
+name: Release desktop apps
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: ${{ matrix.platform }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos-latest
+          - platform: ubuntu-22.04
+          - platform: windows-latest
+    runs-on: ${{ matrix.platform }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install Linux system dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev
+
+      - run: npm ci
+      - run: npm test
+
+      - name: Set the app version from the tag
+        shell: bash
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+([+-][0-9A-Za-z.-]+)?$ ]]; then
+            echo "Release tags must use vMAJOR.MINOR.PATCH (for example v1.2.3)."
+            exit 1
+          fi
+          RELEASE_VERSION="$VERSION" node -e 'const fs = require("fs"); const path = "src-tauri/tauri.conf.json"; const config = JSON.parse(fs.readFileSync(path, "utf8")); config.version = process.env.RELEASE_VERSION; fs.writeFileSync(path, `${JSON.stringify(config, null, 2)}\n`);'
+
+      - name: Build bundles and publish the GitHub Release assets
+        uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ github.ref_name }}
+          releaseName: Atari Forever ${{ github.ref_name }}
+          releaseBody: Desktop builds for Atari Forever ${{ github.ref_name }}.
+          releaseDraft: false
+          prerelease: false

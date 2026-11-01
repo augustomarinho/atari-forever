@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "desktop:dev": "npm exec --package=@tauri-apps/cli@^2 -- tauri dev",
+    "desktop:build": "npm exec --package=@tauri-apps/cli@^2 -- tauri build",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "lint": "biome lint ."
