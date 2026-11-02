@@ -8,6 +8,7 @@
 
 <p align="center">
   <a href="https://github.com/augustomarinho/atari-forever/actions/workflows/ci.yml"><img src="https://github.com/augustomarinho/atari-forever/actions/workflows/ci.yml/badge.svg" alt="CI status" /></a>
+  <a href="https://augustomarinho.github.io/atari-forever/"><img src="https://img.shields.io/badge/website-Atari%20Forever-f4b927?logo=githubpages&logoColor=171512" alt="Atari Forever website" /></a>
   <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/node-%3E%3D22.12-339933?logo=node.js&logoColor=white" alt="Node.js 22.12 or newer" /></a>
   <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white" alt="Strict TypeScript" /></a>
   <a href="https://tauri.app/"><img src="https://img.shields.io/badge/desktop-Tauri-24C8DB?logo=tauri&logoColor=white" alt="Tauri desktop app" /></a>
