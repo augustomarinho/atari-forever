@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
+    "build:pages": "tsc --noEmit && vite build --mode pages && node -e \"require('node:fs').renameSync('dist/pages.html', 'dist/index.html')\"",
     "desktop:dev": "npm exec --package=@tauri-apps/cli@^2 -- tauri dev",
     "desktop:build": "npm exec --package=@tauri-apps/cli@^2 -- tauri build",
     "test": "vitest run",
