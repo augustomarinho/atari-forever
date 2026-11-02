@@ -149,6 +149,26 @@ describe('cartridge', () => {
     expect(cart.read(0x000)).toBe(0xbb)
   })
 
+  it('detects and switches Parker Brothers E0 ROMs', () => {
+    const rom = new Uint8Array(8192)
+    for (let bank = 0; bank < 8; bank++) rom[bank * 1024] = bank
+    rom.set([0x8d, 0xf6, 0xff], 16) // STA $FFF6: the bank switch Popeye uses
+    const cart = createCartridge(rom)
+
+    expect(cart.read(0x000)).toBe(0)
+    expect(cart.read(0x400)).toBe(1)
+    expect(cart.read(0x800)).toBe(2)
+    expect(cart.read(0xc00)).toBe(7)
+
+    cart.write(0xfe6, 0)
+    cart.read(0xfed)
+    cart.write(0xff3, 0)
+    expect(cart.read(0x000)).toBe(6)
+    expect(cart.read(0x400)).toBe(5)
+    expect(cart.read(0x800)).toBe(3)
+    expect(cart.read(0xc00)).toBe(7)
+  })
+
   it('F6 has four banks', () => {
     const rom = new Uint8Array(16384)
     for (let b = 0; b < 4; b++) rom[b * 4096] = b + 1
