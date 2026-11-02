@@ -1,6 +1,22 @@
 # Atari Forever
 
-A browser-based Atari 2600 emulator, available as a web app and as native desktop builds for Windows, macOS, and Linux.
+---
+
+<p align="center">
+  <img src="public/logo.svg" alt="Atari Forever logo" width="180" />
+</p>
+
+<p align="center">
+  <a href="https://github.com/augustomarinho/atari-forever/actions/workflows/ci.yml"><img src="https://github.com/augustomarinho/atari-forever/actions/workflows/ci.yml/badge.svg" alt="CI status" /></a>
+  <a href="https://nodejs.org/"><img src="https://img.shields.io/badge/node-%3E%3D22.12-339933?logo=node.js&logoColor=white" alt="Node.js 22.12 or newer" /></a>
+  <a href="https://www.typescriptlang.org/"><img src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white" alt="Strict TypeScript" /></a>
+  <a href="https://tauri.app/"><img src="https://img.shields.io/badge/desktop-Tauri-24C8DB?logo=tauri&logoColor=white" alt="Tauri desktop app" /></a>
+  <a href="https://github.com/augustomarinho/atari-forever/releases"><img src="https://img.shields.io/github/v/release/augustomarinho/atari-forever?display_name=tag&sort=semver" alt="Latest release" /></a>
+</p>
+
+An Atari 2600 emulator for the browser, with native desktop builds for Windows, macOS, and Linux.
+
+Load a compatible ROM and play directly in the web app, or run Atari Forever as a desktop application. The emulator models the Atari 2600's CPU, video, audio, input, and cartridge hardware in focused TypeScript modules.
 
 ## Run in development mode
 
